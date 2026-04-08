@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - AI Learning Consistency Agent</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="brand">Welcome, <span id="name"></span></div>
+    <div class="nav-links">
+      <a class="active" href="dashboard.html">Dashboard</a>
+      <a href="study-plan.html">Study Plan</a>
+      <a href="progress.html">Progress</a>
+      <button class="btn" onclick="toggleDarkMode()">Theme</button>
+      <button class="btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="grid cards">
+    <div class="card">
+      <h3 id="completion">0%</h3>
+      <p class="muted">Progress %</p>
+    </div>
+    <div class="card">
+      <h3 id="streak">0</h3>
+      <p class="muted">Current Streak</p>
+    </div>
+    <div class="card">
+      <h3 id="today">0/0</h3>
+      <p class="muted">Tasks Today</p>
+    </div>
+    <div class="card">
+      <h3 id="missed">0</h3>
+      <p class="muted">Missed Tasks</p>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top:16px;">
+    <div class="card">
+      <h3>Today's Tasks</h3>
+      <div id="taskList"></div>
+    </div>
+    <div class="card">
+      <h3>Weekly Completion Trend</h3>
+      <canvas id="weeklyChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

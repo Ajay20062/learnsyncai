@@ -1,0 +1,18 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Java
+backend/target/
+*.log
+
+# Local tooling
+.tools/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+backend/.env

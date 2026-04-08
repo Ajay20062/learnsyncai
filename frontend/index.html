@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Learning Consistency Agent - Login</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="card auth-card">
+    <h2>AI Learning Consistency Agent</h2>
+    <p class="muted">Stay consistent with personalized plans and adaptive coaching.</p>
+    <p id="backendStatus" class="muted"></p>
+
+    <div class="footer-actions">
+      <button class="btn primary" onclick="switchTab('login')">Login</button>
+      <button class="btn" onclick="switchTab('signup')">Signup</button>
+      <button class="btn" onclick="toggleDarkMode()">Toggle Theme</button>
+    </div>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input type="email" id="loginEmail" required />
+      <label>Password</label>
+      <input type="password" id="loginPassword" required />
+      <div class="footer-actions">
+        <button class="btn primary" type="submit">Login</button>
+      </div>
+    </form>
+
+    <form id="signupForm" style="display:none;">
+      <label>Name</label>
+      <input type="text" id="signupName" required />
+      <label>Email</label>
+      <input type="email" id="signupEmail" required />
+      <label>Password</label>
+      <input type="password" id="signupPassword" required />
+      <div class="footer-actions">
+        <button class="btn primary" type="submit">Create Account</button>
+      </div>
+    </form>
+
+    <p id="authMessage" class="error"></p>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

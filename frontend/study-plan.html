@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Plan - AI Learning Consistency Agent</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <div class="brand">Study Plan Generator</div>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a class="active" href="study-plan.html">Study Plan</a>
+      <a href="progress.html">Progress</a>
+      <button class="btn" onclick="toggleDarkMode()">Theme</button>
+      <button class="btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Create Personalized Plan</h3>
+    <div class="row">
+      <div>
+        <label>Goal</label>
+        <input id="goal" placeholder="Learn Web Development in 30 days" />
+      </div>
+      <div>
+        <label>Duration (days)</label>
+        <input id="duration" type="number" min="7" max="180" value="30" />
+      </div>
+      <div>
+        <label>Daily Hours</label>
+        <input id="hours" type="number" min="1" max="12" value="2" />
+      </div>
+      <div>
+        <label>Skill Level</label>
+        <select id="skill">
+          <option>BEGINNER</option>
+          <option>INTERMEDIATE</option>
+          <option>ADVANCED</option>
+        </select>
+      </div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn primary" onclick="generatePlan()">Generate Plan</button>
+      <button class="btn" onclick="loadLatestPlan()">Load Latest</button>
+      <button class="btn" onclick="loadAdaptive()">Adaptive Suggestion</button>
+    </div>
+    <p id="planMessage" class="muted"></p>
+  </div>
+
+  <div class="card" style="margin-top: 16px;">
+    <h3>Plan Tasks</h3>
+    <div id="planTasks"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/plan.js"></script>
+</body>
+</html>
