@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:learnsyncai_test;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  mail:
+    host:
+    username:
+    password:
+
+app:
+  jwt:
+    secret: test-secret-key-with-minimum-length-1234567890-abcdefghijklmnopqrstuvwxyz
+    expiration-minutes: 60
+  openai:
+    api-key:
+  reminder:
+    cron: 0 0 20 * * *

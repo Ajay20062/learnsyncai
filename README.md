@@ -1,172 +1,134 @@
-# AI Learning Consistency Agent
+# LearnSyncAI
 
-Full-stack learning consistency app with AI-assisted study plans, progress tracking, adaptive recommendations, and reminders.
+Professional full-stack learning consistency platform with:
+- JWT authentication
+- AI-assisted study plan generation
+- Progress tracking and dashboard analytics
+- Adaptive reminder engine
 
-## 1) Complete Folder Structure
+## Tech Stack
+
+- Backend: Java 17, Spring Boot 3, Spring Security, Spring Data JPA
+- Database: H2 (default local), MySQL 8 (docker/production-style)
+- Frontend: HTML/CSS/JavaScript
+- Tooling: Maven Wrapper, Docker Compose, GitHub Actions CI
+
+## Project Structure
 
 ```text
 learnsyncai/
 ├─ backend/
-│  ├─ pom.xml
-│  ├─ Dockerfile
-│  └─ src/main/
-│     ├─ java/com/learnsyncai/agent/
-│     │  ├─ AiLearningConsistencyAgentApplication.java
-│     │  ├─ config/
-│     │  │  ├─ AppConfig.java
-│     │  │  ├─ JwtAuthFilter.java
-│     │  │  ├─ JwtService.java
-│     │  │  └─ SecurityConfig.java
-│     │  ├─ controller/
-│     │  │  ├─ AuthController.java
-│     │  │  ├─ PlanController.java
-│     │  │  ├─ ProgressController.java
-│     │  │  └─ ReminderController.java
-│     │  ├─ dto/
-│     │  ├─ exception/
-│     │  ├─ model/
-│     │  ├─ repository/
-│     │  └─ service/
-│     └─ resources/
-│        └─ application.yml
 ├─ database/
-│  ├─ schema.sql
-│  └─ sample_data.sql
 ├─ frontend/
-│  ├─ index.html
-│  ├─ dashboard.html
-│  ├─ study-plan.html
-│  ├─ progress.html
-│  ├─ css/styles.css
-│  └─ js/
-│     ├─ api.js
-│     ├─ auth.js
-│     ├─ dashboard.js
-│     ├─ plan.js
-│     └─ progress.js
+├─ scripts/
 ├─ docker-compose.yml
 └─ README.md
 ```
 
-## 2) Backend (Spring Boot) Highlights
+## Quick Start (Recommended)
 
-- Java 17, Spring Boot 3, MVC + REST architecture.
-- JWT authentication with bcrypt password hashing.
-- Layered structure:
-  - `controller/` HTTP APIs
-  - `service/` business logic, AI integration, reminder scheduler
-  - `repository/` JPA access
-  - `model/` entities
-  - `dto/` request/response contracts
-  - `config/` security and app configuration
-- Validation and centralized exception handling included.
+### 1) Start backend
 
-## 3) Frontend Highlights
+```bash
+cd backend
+./mvnw spring-boot:run
+```
 
-- Responsive HTML/CSS/JS UI (mobile + desktop).
-- Pages:
-  - Login/Signup: `frontend/index.html`
-  - Dashboard: `frontend/dashboard.html`
-  - Study Plan: `frontend/study-plan.html`
-  - Progress Tracker: `frontend/progress.html`
-- Chart.js weekly progress visualization.
-- Dark mode toggle included.
+Windows:
 
-## 4) SQL Schema
+```powershell
+$env:JAVA_HOME="C:\Program Files\Java\jdk-17"
+cd backend
+.\mvnw.cmd spring-boot:run
+```
 
-- Schema file: `database/schema.sql`
-- Sample test data: `database/sample_data.sql`
-- Tables:
-  - `users`
-  - `study_plans`
-  - `tasks`
-  - `progress_logs`
-  - `reminders`
+### 2) Start frontend static server
 
-## 5) API Endpoints
+```bash
+cd frontend
+python -m http.server 5500
+```
 
-### Auth
+Open: `http://localhost:5500/index.html`
+
+## One-command local dev
+
+Windows:
+
+```powershell
+.\scripts\dev.ps1
+```
+
+Linux/macOS:
+
+```bash
+./scripts/dev.sh
+```
+
+## Configuration
+
+Backend config is in `backend/src/main/resources/application.yml`.
+
+Important environment variables:
+- `JWT_SECRET`
+- `OPENAI_API_KEY` (optional, fallback logic is built in)
+- `CORS_ALLOWED_ORIGIN_PATTERNS`
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_DRIVER_CLASS_NAME`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+
+Default local DB is embedded H2 for zero-setup startup.
+
+## API Endpoints
+
+Auth:
 - `POST /api/auth/signup`
 - `POST /api/auth/login`
 
-### Study Plan
+Study plan:
 - `POST /api/plan/generate`
 - `GET /api/plan/latest`
 - `GET /api/plan/adapt/weekly`
 
-### Progress
+Progress:
 - `PATCH /api/progress`
 - `GET /api/progress/dashboard`
 
-### Reminder
+Reminder:
 - `GET /api/reminder`
 - `PUT /api/reminder`
 - `POST /api/reminder/auto-adjust`
 
-## 6) AI Integration
+Health:
+- `GET /actuator/health`
+- `GET /actuator/info`
 
-Implemented in `backend/src/main/java/com/learnsyncai/agent/service/AiService.java`.
+## CI/CD Quality Baseline
 
-Prompts implemented:
-1. Study plan generation
-2. Adaptive plan recommendation
-3. Motivation message generation
+- Backend CI workflow runs on every push/PR to `main`
+- Uses Java 17 and Maven wrapper
+- Executes backend test suite
 
-Set your key with:
+Workflow file:
+- `.github/workflows/backend-ci.yml`
 
-```bash
-OPENAI_API_KEY=your_key_here
-```
-
-If key is missing/unavailable, fallback logic still generates usable plans/messages.
-
-## 7) Run Instructions (Step-by-step)
-
-### Option A: Local run
-
-1. Start MySQL and create DB:
-   - Run `database/schema.sql`
-   - Optional: run `database/sample_data.sql`
-   - Optional only: local quick start now defaults to embedded H2 if MySQL env vars are not set.
-2. Configure backend env vars:
-   - `JWT_SECRET`
-   - `OPENAI_API_KEY` (optional but recommended)
-   - `CORS_ALLOWED_ORIGIN_PATTERNS` (optional, default: `http://localhost:*`)
-   - MySQL username/password in `application.yml` or env overrides
-3. Run backend:
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```
-4. Run frontend:
-   - Serve `frontend/` with a static server (for example VS Code Live Server) at `http://localhost:5500` (recommended).
-   - Direct `file://` access is also permitted by default CORS config (`null` origin), but a local server is preferred.
-5. Open:
-   - `http://localhost:5500/index.html`
-
-### Option B: Docker run
+## Docker Setup
 
 ```bash
 docker compose up --build
 ```
 
-- Backend: `http://localhost:8080`
-- Frontend (served separately from local `frontend/` folder)
+Services:
+- MySQL: `localhost:3306`
+- Backend: `localhost:8080`
 
-## 8) Sample Test Data
+## Frontend API Base Override
 
-From `database/sample_data.sql`:
-- Demo user: `demo@learnsync.ai`
-- Password: `Password@123`
-- Preloaded 1 study plan + tasks + progress logs + reminder settings.
+By default frontend uses:
+- current host + `:8080/api` when served over `http/https`
+- fallback `http://localhost:8080/api`
 
-## Bonus Implemented
-
-- Docker setup (`backend/Dockerfile`, `docker-compose.yml`)
-- Mobile responsive UI
-- Dark mode support
-
-## Notes
-
-- Reminder engine runs on scheduler (`app.reminder.cron`, default 8 PM daily).
-- Email reminders are sent if mail credentials are configured; otherwise logs are generated as fallback.
+Optional overrides:
+- `window.LEARNSYNCAI_API_BASE = "http://your-host:8080/api"`
+- `localStorage.setItem("learnsync.apiBase", "http://your-host:8080/api")`

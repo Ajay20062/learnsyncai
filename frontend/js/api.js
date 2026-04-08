@@ -1,4 +1,27 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = resolveApiBase();
+
+function resolveApiBase() {
+  const fromWindow = window.LEARNSYNCAI_API_BASE;
+  const fromStorage = localStorage.getItem("learnsync.apiBase");
+
+  if (fromWindow) {
+    return normalizeApiBase(fromWindow);
+  }
+  if (fromStorage) {
+    return normalizeApiBase(fromStorage);
+  }
+
+  if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+    return `${window.location.protocol}//${window.location.hostname}:8080/api`;
+  }
+
+  return "http://localhost:8080/api";
+}
+
+function normalizeApiBase(value) {
+  const trimmed = String(value).trim().replace(/\/+$/, "");
+  return trimmed.endsWith("/api") ? trimmed : `${trimmed}/api`;
+}
 
 function getToken() {
   return localStorage.getItem("token");
